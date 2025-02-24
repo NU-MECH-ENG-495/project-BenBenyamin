@@ -17,9 +17,9 @@ void Sphere::project(Canvas &c)
     int yEnd = std::min(y + static_cast<int>(scaledRadius), c.getHeight());
 
     // Loop over the bounding box of the sphere on the canvas
-    for (int x_ = xStart; x_ < xEnd; ++x_)
+    for (int x_ = xStart; x_ <= xEnd; ++x_)
     {
-        for (int y_ = yStart; y_ < yEnd; ++y_)
+        for (int y_ = yStart; y_ <= yEnd; ++y_)
         {
             // Check if the point is within the sphere's radius using the circle equation
             double dx = x - x_;
