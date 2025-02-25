@@ -9,6 +9,7 @@ class Canvas
     private:
         int height;
         int width;
+        std::vector<float> cameraNormal;
         std::vector<std::vector<std::vector<float>>> pixels;
 
     public:
@@ -17,6 +18,8 @@ class Canvas
         int getWidth();
         int getHeight();
         void writePPM(const std::string& filename);
+        void setCameraNormal(std::vector<float> &normal);
+
 };
 
 #endif // CANVAS_H

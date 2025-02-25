@@ -2,6 +2,7 @@
 #include <iostream>
 #include <fstream>
 #include <stdexcept>
+#include <cmath>
 
 #include "canvas.h"
 
@@ -57,4 +58,36 @@ void Canvas::writePPM(const std::string &filename)
     // Close the file
     ppmFile.close();
     std::cout << "PPM file '" << filename << "' created successfully!" << std::endl;
+}
+
+void Canvas::setCameraNormal(std::vector<float> &normal)
+{
+    // Check if the normal vector has 3 elements (for 3D space)
+    if (normal.size() != 3)
+    {
+        throw std::invalid_argument("Normal vector must have 3 elements.");
+    }
+
+    // Calculate the magnitude (length) of the vector
+    float magnitude = 0.0f;
+    for (float val : normal)
+    {
+        magnitude += val * val;
+    }
+
+    magnitude = std::sqrt(magnitude);
+
+    // Avoid division by zero (check if the vector is not a zero vector)
+    if (magnitude == 0.0f)
+    {
+        throw std::invalid_argument("Normal vector cannot be a zero vector.");
+    }
+
+    // Normalize the normal vector by dividing each component by the magnitude
+    for (float &val : normal)
+    {
+        val /= magnitude;
+    }
+
+    this->cameraNormal = normal;
 }
