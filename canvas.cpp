@@ -91,3 +91,5 @@ void Canvas::setCameraNormal(std::vector<float> &normal)
 
     this->cameraNormal = normal;
 }
+
+std::vector<float> Canvas::getCameraNormal() const {return this->cameraNormal;}
