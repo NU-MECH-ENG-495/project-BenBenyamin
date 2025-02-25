@@ -20,6 +20,17 @@ void Canvas::putPixel(int x, int y, std::vector<float> &color)
     }
 }
 
+void Canvas::clear()
+{
+    std::vector<float> defaultColor = {0.0f, 0.0f, 0.0f};
+
+    for (int i = 0; i < height; ++i)
+    {
+        std::fill(pixels[i].begin(), pixels[i].end(), defaultColor);
+    }
+}
+
+
 int Canvas::getWidth() { return width; }
 int Canvas::getHeight() { return height; }
 
@@ -90,6 +101,7 @@ void Canvas::setCameraNormal(std::vector<float> &normal)
     }
 
     this->cameraNormal = normal;
+    this->clear(); // clear  the canvas becuase the the camera position was changed
 }
 
 std::vector<float> Canvas::getCameraNormal() const {return this->cameraNormal;}

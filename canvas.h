@@ -19,6 +19,7 @@ class Canvas
         int getHeight();
         void writePPM(const std::string& filename);
         void setCameraNormal(std::vector<float> &normal);
+        void clear();
         std::vector<float> getCameraNormal() const;
 
 };
