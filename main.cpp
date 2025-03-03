@@ -5,18 +5,6 @@
 #include "canvas.h"
 #include "triangle.h"
 
-void rotateCameraNormal(std::vector<float> &normal, float angle)
-{
-    // Rotate the camera normal around the X-axis in 3D space
-    float cosAngle = cos(angle);
-    float sinAngle = sin(angle);
-
-    float y = normal[1] * cosAngle - normal[2] * sinAngle;
-    float z = normal[1] * sinAngle + normal[2] * cosAngle;
-    normal[1] = y;
-    normal[2] = z;
-}
-
 
 int main()
 {
@@ -41,15 +29,14 @@ int main()
     std::vector<float> cameraNormal = {0.0f, 0.0f, 1.0f};
     canvas.setCameraNormal(cameraNormal);
 
-    int numFrames = 36;  // Number of frames for the animation (one per rotation)
-    float rotationAngle = -2 * M_PI / numFrames;  // Angle for each rotation
+    int numFrames = 100;  // Number of frames for the animation (one per rotation)
+    float rotationAngle = 360.0 / numFrames;  // Angle for each rotation
 
     // Generate frames for the animation
-    for (int frame = 0; frame < numFrames; ++frame)
+    for (int frame = 0; frame < numFrames/2.0; ++frame)
     {
-        // Rotate the camera normal but keep the triangle's position fixed
-        rotateCameraNormal(cameraNormal, rotationAngle);
-        canvas.setCameraNormal(cameraNormal);
+        // Rotate the triangle but keep the triangle's position fixed
+        triangle.rotateAroundZ(rotationAngle);
 
         // Clear the canvas for the new frame
         canvas.clear();

@@ -1,9 +1,11 @@
 #include <vector>
 #include <numeric>
+#include <cmath>
+#include <iostream>
 #include "triangle.h"
 #include "canvas.h"
 
-TriangleSurface::TriangleSurface(const std::vector<float> &a, const std::vector<float> &b, const std::vector<float> &c, const std::vector<float> &color) 
+TriangleSurface::TriangleSurface(const std::vector<float> &a, const std::vector<float> &b, const std::vector<float> &c, const std::vector<float> &color)
     : A{a}, B{b}, C{c}, color{color} {}
 
 void TriangleSurface::project(Canvas &c)
@@ -29,7 +31,7 @@ void TriangleSurface::project(Canvas &c)
     }
 }
 
-bool TriangleSurface::isInside(std::vector<float> &point, const std::vector<float>& projectedA, const std::vector<float>& projectedB, const std::vector<float>& projectedC) const
+bool TriangleSurface::isInside(std::vector<float> &point, const std::vector<float> &projectedA, const std::vector<float> &projectedB, const std::vector<float> &projectedC) const
 {
     // Calculate the vectors from the reference point A to B, C, and the point P
     std::vector<float> AB = {projectedB[0] - projectedA[0], projectedB[1] - projectedA[1]};
@@ -60,4 +62,119 @@ std::vector<float> TriangleSurface::projectPointToPlane(const std::vector<float>
     projection[1] -= dotProduct * normal[1];
     projection[2] -= dotProduct * normal[2];
     return projection;
+}
+
+void TriangleSurface::rotateAroundX(float angle)
+{
+    // Convert angle from degrees to radians
+    float rad = angle * M_PI / 180.0f;
+    float cosA = cos(rad);
+    float sinA = sin(rad);
+
+    // Compute centroid of the triangle
+    float centerX = (A[0] + B[0] + C[0]) / 3.0f;
+    float centerY = (A[1] + B[1] + C[1]) / 3.0f;
+    float centerZ = (A[2] + B[2] + C[2]) / 3.0f;
+
+    // Translate points to origin by subtracting the centroid
+    for (auto &point : {std::ref(A), std::ref(B), std::ref(C)})
+    {
+        point.get()[0] -= centerX;
+        point.get()[1] -= centerY;
+        point.get()[2] -= centerZ;
+    }
+
+    // Rotate each vector around the X-axis
+    for (auto &point : {std::ref(A), std::ref(B), std::ref(C)})
+    {
+        float newY = point.get()[1] * cosA - point.get()[2] * sinA;
+        float newZ = point.get()[1] * sinA + point.get()[2] * cosA;
+        point.get()[1] = newY;
+        point.get()[2] = newZ;
+    }
+
+    // Translate points back to original position
+    for (auto &point : {std::ref(A), std::ref(B), std::ref(C)})
+    {
+        point.get()[0] += centerX;
+        point.get()[1] += centerY;
+        point.get()[2] += centerZ;
+    }
+
+}
+
+void TriangleSurface::rotateAroundY(float angle)
+{
+    // Convert angle from degrees to radians
+    float rad = angle * M_PI / 180.0f;
+    float cosA = cos(rad);
+    float sinA = sin(rad);
+
+    // Compute centroid of the triangle
+    float centerX = (A[0] + B[0] + C[0]) / 3.0f;
+    float centerY = (A[1] + B[1] + C[1]) / 3.0f;
+    float centerZ = (A[2] + B[2] + C[2]) / 3.0f;
+
+    // Translate points to origin by subtracting the centroid
+    for (auto &point : {std::ref(A), std::ref(B), std::ref(C)})
+    {
+        point.get()[0] -= centerX;
+        point.get()[1] -= centerY;
+        point.get()[2] -= centerZ;
+    }
+
+    // Rotate each vector around the Y-axis
+    for (auto &point : {std::ref(A), std::ref(B), std::ref(C)})
+    {
+        float newX = point.get()[0] * cosA + point.get()[2] * sinA;
+        float newZ = -point.get()[0] * sinA + point.get()[2] * cosA;
+        point.get()[0] = newX;
+        point.get()[2] = newZ;
+    }
+
+    // Translate points back to original position
+    for (auto &point : {std::ref(A), std::ref(B), std::ref(C)})
+    {
+        point.get()[0] += centerX;
+        point.get()[1] += centerY;
+        point.get()[2] += centerZ;
+    }
+}
+
+void TriangleSurface::rotateAroundZ(float angle)
+{
+    // Convert angle from degrees to radians
+    float rad = angle * M_PI / 180.0f;
+    float cosA = cos(rad);
+    float sinA = sin(rad);
+
+    // Compute centroid of the triangle
+    float centerX = (A[0] + B[0] + C[0]) / 3.0f;
+    float centerY = (A[1] + B[1] + C[1]) / 3.0f;
+    float centerZ = (A[2] + B[2] + C[2]) / 3.0f;
+
+    // Translate points to origin by subtracting the centroid
+    for (auto &point : {std::ref(A), std::ref(B), std::ref(C)})
+    {
+        point.get()[0] -= centerX;
+        point.get()[1] -= centerY;
+        point.get()[2] -= centerZ;
+    }
+
+    // Rotate each vector around the Z-axis
+    for (auto &point : {std::ref(A), std::ref(B), std::ref(C)})
+    {
+        float newX = point.get()[0] * cosA - point.get()[1] * sinA;
+        float newY = point.get()[0] * sinA + point.get()[1] * cosA;
+        point.get()[0] = newX;
+        point.get()[1] = newY;
+    }
+
+    // Translate points back to original position
+    for (auto &point : {std::ref(A), std::ref(B), std::ref(C)})
+    {
+        point.get()[0] += centerX;
+        point.get()[1] += centerY;
+        point.get()[2] += centerZ;
+    }
 }
