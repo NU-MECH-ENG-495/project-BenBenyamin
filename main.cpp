@@ -36,7 +36,7 @@ int main()
     std::vector<float> cameraNormal = {0.0f, 0.0f, 1.0f};
     canvas.setCameraNormal(cameraNormal);
 
-    int numFrames = 1;                     // Number of frames for the animation (one per rotation)
+    int numFrames = 5;                     // Number of frames for the animation (one per rotation)
     float rotationAngle = 360.0 / numFrames; // Angle for each rotation
 
     // Generate frames for the animation
@@ -48,8 +48,8 @@ int main()
         // Project and render all four faces of the tetrahedron
         face1.project(canvas);
         face2.project(canvas);
-        face4.project(canvas);
         face3.project(canvas);
+        face4.project(canvas);
 
         // Rotate the tetrahedron around the X-axis
         face1.rotateAroundX(rotationAngle);

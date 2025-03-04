@@ -36,8 +36,8 @@ void TriangleSurface::project(Canvas &c)
             if (!point3D.empty()) // If the point is inside the triangle then render it
             {
                 // Calculate the depth of the point
-                float depth = point3D[0] * normal[0] + point[1] * point3D[1] + point[2] * point3D[2]; // the depth is the dot product 
-                c.putPixel(i, j, depth, color);
+                float depth = point3D[0] * normal[0] + point3D[1] * normal[1] + point3D[2] * normal[2]; // the depth is the dot product 
+                c.putPixel(i, j, point3D[2], color);
             }
         }
     }
@@ -75,6 +75,9 @@ std::vector<float> TriangleSurface::isInside(
             projectedA[1] + u * (projectedB[1] - projectedA[1]) + v * (projectedC[1] - projectedA[1]),
             projectedA[2] + u * (projectedB[2] - projectedA[2]) + v * (projectedC[2] - projectedA[2])
         };
+
+        // std::cout << "Point 3D:" << point3D[0] << " " << point3D[1] << " " << point3D[2] << std::endl;
+
         return point3D;
     }
 
@@ -138,6 +141,10 @@ void TriangleSurface::rotateAroundX(float angle)
         point.get()[1] += centerY;
         point.get()[2] += centerZ;
     }
+
+    std::cout << "A: " << A[0] << " " << A[1] << " " << A[2] << std::endl;
+    std::cout << "B: " << B[0] << " " << B[1] << " " << B[2] << std::endl;
+    std::cout << "C: " << C[0] << " " << C[1] << " " << C[2] << std::endl;
 }
 
 void TriangleSurface::rotateAroundY(float angle)

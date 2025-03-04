@@ -12,8 +12,11 @@ void Canvas::putPixel(int x, int y, float depth, std::vector<float> &color)
 {
     if (x >= 0 && x < height && y >= 0 && y < width && color.size() == 3)
     {
-        this->pixels[x][y] = color;
-        this->depth[x][y] = depth;  
+        if (this->depth[x][y] > depth || this->depth[x][y] == 0.0f)
+        {
+            this->pixels[x][y] = color;
+            this->depth[x][y] = depth;  
+        }
     }
     else
     {
