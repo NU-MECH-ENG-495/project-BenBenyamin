@@ -79,7 +79,7 @@ std::vector<float> TriangleSurface::projectPointToPlane(
     projection[2] -= dotProduct * normal[2];
 
     // Scale the projection relative to the center
-    float scale = 1.0f / point[2]; // Perspective scaling factor
+    float scale = 1.0f / dotProduct; // Perspective scaling factor per the dot product
     projection[0] = center[0] + (projection[0] - center[0]) * scale;
     projection[1] = center[1] + (projection[1] - center[1]) * scale;
     projection[2] = center[2] + (projection[2] - center[2]) * scale;

@@ -20,12 +20,17 @@ int main()
     std::vector<float> B = {centerX - 150 * scaleFactor, centerY + 100 * scaleFactor, 2};
     std::vector<float> C = {centerX + 150 * scaleFactor, centerY, 1.5};
 
+    std::cout << "Triangle vertices: " << std::endl;
+    std::cout << "A: (" << A[0] << ", " << A[1] << ", " << A[2] << ")" << std::endl;
+    std::cout << "B: (" << B[0] << ", " << B[1] << ", " << B[2] << ")" << std::endl;
+    std::cout << "C: (" << C[0] << ", " << C[1] << ", " << C[2] << ")" << std::endl;
+
     // Create the triangle with fixed color
     std::vector<float> color = {1.0f, 0.0f, 0.0f}; // Red color
     TriangleSurface triangle(A, B, C, color);
 
     // Initial camera normal facing directly along the Z-axis
-    std::vector<float> cameraNormal = {0.0f, 0.0f, 1.0f};
+    std::vector<float> cameraNormal = {0.07f, 0.0f, 1.0f};
     canvas.setCameraNormal(cameraNormal);
 
     int numFrames = 1;                     // Number of frames for the animation (one per rotation)
