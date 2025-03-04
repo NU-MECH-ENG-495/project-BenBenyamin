@@ -31,15 +31,19 @@ void TriangleSurface::project(Canvas &c)
         {
             std::vector<float> point = {static_cast<float>(i), static_cast<float>(j)};
 
-            if (isInside(point, projectedA, projectedB, projectedC))
+            auto point3D = isInside(point, projectedA, projectedB, projectedC);
+
+            if (!point3D.empty()) // If the point is inside the triangle then render it
             {
-                c.putPixel(i, j, color);
+                // Calculate the depth of the point
+                float depth = point3D[0] * normal[0] + point[1] * point3D[1] + point[2] * point3D[2]; // the depth is the dot product 
+                c.putPixel(i, j, depth, color);
             }
         }
     }
 }
 
-bool TriangleSurface::isInside(
+std::vector<float> TriangleSurface::isInside(
     std::vector<float> &point,
     const std::vector<float> &projectedA,
     const std::vector<float> &projectedB,
@@ -55,7 +59,7 @@ bool TriangleSurface::isInside(
 
     if (det == 0)
     {
-        return false; // Points are collinear; not inside the triangle
+        return {}; // Points are collinear; not inside the triangle
     }
 
     // Calculate (u, v) using Cramer's rule
@@ -63,7 +67,18 @@ bool TriangleSurface::isInside(
     float v = (AB[0] * AP[1] - AB[1] * AP[0]) / det;
 
     // The point is inside the triangle if 0 <= u, v <= 1, and u + v <= 1
-    return (u >= 0 && v >= 0 && u + v <= 1);
+    if (u >= 0 && v >= 0 && u + v <= 1)
+    {
+        // Calculate the 3D coordinates of the point inside the triangle
+        std::vector<float> point3D = {
+            projectedA[0] + u * (projectedB[0] - projectedA[0]) + v * (projectedC[0] - projectedA[0]),
+            projectedA[1] + u * (projectedB[1] - projectedA[1]) + v * (projectedC[1] - projectedA[1]),
+            projectedA[2] + u * (projectedB[2] - projectedA[2]) + v * (projectedC[2] - projectedA[2])
+        };
+        return point3D;
+    }
+
+    return {}; // Point is not inside the triangle
 }
 
 std::vector<float> TriangleSurface::projectPointToPlane(

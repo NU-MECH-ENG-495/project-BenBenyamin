@@ -17,7 +17,7 @@ public:
 
     void project(Canvas &c);
 
-    bool isInside(std::vector<float> &point, const std::vector<float> &projectedA, const std::vector<float> &projectedB, const std::vector<float> &projectedC) const;
+    std::vector<float> isInside(std::vector<float> &point, const std::vector<float> &projectedA, const std::vector<float> &projectedB, const std::vector<float> &projectedC) const;
 
     std::vector<float> projectPointToPlane(const std::vector<float> &point, const std::vector<float> &normal, const std::vector<float> &center) const;
 

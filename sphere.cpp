@@ -27,7 +27,7 @@ void Sphere::project(Canvas &c)
             if (dx * dx + dy * dy <= std::pow(scaledRadius, 2))
             {
                 // Set the pixel color on the canvas
-                c.putPixel(x_, y_, color);
+                c.putPixel(x_, y_, 1.0,color);
             }
         }
     }

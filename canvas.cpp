@@ -6,13 +6,14 @@
 
 #include "canvas.h"
 
-Canvas::Canvas(int h, int w) : height(h), width(w), pixels(h, std::vector<std::vector<float>>(w, std::vector<float>(3, 0.0))) {}
+Canvas::Canvas(int h, int w) : height(h), width(w), pixels(h, std::vector<std::vector<float>>(w, std::vector<float>(3, 0.0))), depth(h, std::vector<float>(w, 0.0f)) {};
 
-void Canvas::putPixel(int x, int y, std::vector<float> &color)
+void Canvas::putPixel(int x, int y, float depth, std::vector<float> &color)
 {
     if (x >= 0 && x < height && y >= 0 && y < width && color.size() == 3)
     {
         this->pixels[x][y] = color;
+        this->depth[x][y] = depth;  
     }
     else
     {
