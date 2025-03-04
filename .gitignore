@@ -3,3 +3,4 @@ output
 output.ppm
 main
 build
+make.sh

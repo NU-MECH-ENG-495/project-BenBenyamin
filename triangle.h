@@ -14,12 +14,12 @@ private:
 
 public:
     TriangleSurface(const std::vector<float> &a, const std::vector<float> &b, const std::vector<float> &c, const std::vector<float> &color);
-    
+
     void project(Canvas &c);
-    
-    bool isInside(std::vector<float> &point, const std::vector<float>& projectedA, const std::vector<float>& projectedB, const std::vector<float>& projectedC) const;
-    
-    std::vector<float> projectPointToPlane(const std::vector<float> &point, const std::vector<float> &normal) const;
+
+    bool isInside(std::vector<float> &point, const std::vector<float> &projectedA, const std::vector<float> &projectedB, const std::vector<float> &projectedC) const;
+
+    std::vector<float> projectPointToPlane(const std::vector<float> &point, const std::vector<float> &normal, const std::vector<float> &center) const;
 
     void rotateAroundX(float angle);
     void rotateAroundY(float angle);

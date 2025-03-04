@@ -11,9 +11,17 @@ TriangleSurface::TriangleSurface(const std::vector<float> &a, const std::vector<
 void TriangleSurface::project(Canvas &c)
 {
     auto normal = c.getCameraNormal();
-    std::vector<float> projectedA = projectPointToPlane(A, normal);
-    std::vector<float> projectedB = projectPointToPlane(B, normal);
-    std::vector<float> projectedC = projectPointToPlane(C, normal);
+
+    std::vector<float> centroid = 
+    {
+        (A[0] + B[0] + C[0]) / 3.0f,
+        (A[1] + B[1] + C[1]) / 3.0f,
+        (A[2] + B[2] + C[2]) / 3.0f
+    };
+
+    std::vector<float> projectedA = projectPointToPlane(A, normal, centroid);
+    std::vector<float> projectedB = projectPointToPlane(B, normal, centroid);
+    std::vector<float> projectedC = projectPointToPlane(C, normal, centroid);
 
     // TODO: Make these loops scope smaller
 
@@ -31,7 +39,11 @@ void TriangleSurface::project(Canvas &c)
     }
 }
 
-bool TriangleSurface::isInside(std::vector<float> &point, const std::vector<float> &projectedA, const std::vector<float> &projectedB, const std::vector<float> &projectedC) const
+bool TriangleSurface::isInside(
+    std::vector<float> &point,
+    const std::vector<float> &projectedA,
+    const std::vector<float> &projectedB,
+    const std::vector<float> &projectedC) const
 {
     // Calculate the vectors from the reference point A to B, C, and the point P
     std::vector<float> AB = {projectedB[0] - projectedA[0], projectedB[1] - projectedA[1]};
@@ -54,13 +66,24 @@ bool TriangleSurface::isInside(std::vector<float> &point, const std::vector<floa
     return (u >= 0 && v >= 0 && u + v <= 1);
 }
 
-std::vector<float> TriangleSurface::projectPointToPlane(const std::vector<float> &point, const std::vector<float> &normal) const
+std::vector<float> TriangleSurface::projectPointToPlane(
+    const std::vector<float> &point,
+    const std::vector<float> &normal,
+    const std::vector<float> &center) const
 {
+    // Project the point onto the plane
     std::vector<float> projection = point;
     float dotProduct = point[0] * normal[0] + point[1] * normal[1] + point[2] * normal[2];
     projection[0] -= dotProduct * normal[0];
     projection[1] -= dotProduct * normal[1];
     projection[2] -= dotProduct * normal[2];
+
+    // Scale the projection relative to the center
+    float scale = 1.0f / point[2]; // Perspective scaling factor
+    projection[0] = center[0] + (projection[0] - center[0]) * scale;
+    projection[1] = center[1] + (projection[1] - center[1]) * scale;
+    projection[2] = center[2] + (projection[2] - center[2]) * scale;
+
     return projection;
 }
 
@@ -100,7 +123,6 @@ void TriangleSurface::rotateAroundX(float angle)
         point.get()[1] += centerY;
         point.get()[2] += centerZ;
     }
-
 }
 
 void TriangleSurface::rotateAroundY(float angle)
