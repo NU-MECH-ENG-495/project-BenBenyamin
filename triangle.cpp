@@ -97,7 +97,7 @@ std::vector<float> TriangleSurface::projectPointToPlane(
     projection[2] -= dotProduct * normal[2];
 
     // Scale the projection relative to the center
-    float scale = 1.0f / dotProduct; // Perspective scaling factor per the dot product
+    float scale = 20.0f; // / dotProduct; // Perspective scaling factor per the dot product
     projection[0] = center[0] + (projection[0] - center[0]) * scale;
     projection[1] = center[1] + (projection[1] - center[1]) * scale;
     projection[2] = center[2] + (projection[2] - center[2]) * scale;
@@ -142,9 +142,9 @@ void TriangleSurface::rotateAroundX(float angle)
         point.get()[2] += centerZ;
     }
 
-    std::cout << "A: " << A[0] << " " << A[1] << " " << A[2] << std::endl;
-    std::cout << "B: " << B[0] << " " << B[1] << " " << B[2] << std::endl;
-    std::cout << "C: " << C[0] << " " << C[1] << " " << C[2] << std::endl;
+    // std::cout << "A: " << A[0] << " " << A[1] << " " << A[2] << std::endl;
+    // std::cout << "B: " << B[0] << " " << B[1] << " " << B[2] << std::endl;
+    // std::cout << "C: " << C[0] << " " << C[1] << " " << C[2] << std::endl;
 }
 
 void TriangleSurface::rotateAroundY(float angle)

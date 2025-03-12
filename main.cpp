@@ -10,54 +10,64 @@ int main()
     int width = 1000, height = 1000;
     Canvas canvas(height, width);
 
-    // Define the four vertices of the tetrahedron
-    float scaleFactor = 200.0f; // Scale factor for tetrahedron size
+    // Define the eight vertices of the cube
+    float scaleFactor = 1.0f;
     float centerX = width / 2.0f;
     float centerY = height / 2.0f;
 
-    std::vector<float> A = {centerX, centerY - scaleFactor, 1.0f}; // Top vertex
-    std::vector<float> B = {centerX - scaleFactor, centerY + scaleFactor, 1.0f}; // Bottom left vertex
-    std::vector<float> C = {centerX + scaleFactor, centerY + scaleFactor, 1.0f}; // Bottom right vertex
-    std::vector<float> D = {centerX, centerY, 1.0f + scaleFactor}; // Front vertex (raised along Z-axis)
+    std::vector<std::vector<float>> vertices = {
+        {centerX - scaleFactor, centerY - scaleFactor, -scaleFactor}, // A
+        {centerX + scaleFactor, centerY - scaleFactor, -scaleFactor}, // B
+        {centerX + scaleFactor, centerY + scaleFactor, -scaleFactor}, // C
+        {centerX - scaleFactor, centerY + scaleFactor, -scaleFactor}, // D
+        {centerX - scaleFactor, centerY - scaleFactor, scaleFactor},  // E
+        {centerX + scaleFactor, centerY - scaleFactor, scaleFactor},  // F
+        {centerX + scaleFactor, centerY + scaleFactor, scaleFactor},  // G
+        {centerX - scaleFactor, centerY + scaleFactor, scaleFactor}   // H
+    };
 
-    // Define the four faces of the tetrahedron
-    std::vector<float> red = {1.0f, 0.0f, 0.0f};    // Red
-    std::vector<float> green = {0.0f, 1.0f, 0.0f};  // Green
-    std::vector<float> blue = {0.0f, 0.0f, 1.0f};   // Blue
-    std::vector<float> yellow = {1.0f, 1.0f, 0.0f}; // Yellow
+    // Define cube faces using triangles
+    std::vector<std::vector<float>> colors = {
+        {1.0f, 0.0f, 0.0f},  // Red
+        {0.0f, 1.0f, 0.0f},  // Green
+        {0.0f, 0.0f, 1.0f},  // Blue
+        {1.0f, 1.0f, 0.0f},  // Yellow
+        {1.0f, 0.0f, 1.0f},  // Magenta
+        {0.0f, 1.0f, 1.0f}   // Cyan
+    };
 
-    // Create the four triangles (faces) of the tetrahedron
-    TriangleSurface face1(A, B, C, red);    // Base triangle
-    TriangleSurface face2(A, B, D, green);  // Front-left triangle
-    TriangleSurface face3(A, C, D, blue);   // Front-right triangle
-    TriangleSurface face4(B, C, D, yellow); // Back triangle
+    std::vector<TriangleSurface> faces = {
+        {vertices[0], vertices[1], vertices[2], colors[0]}, // Front face
+        {vertices[0], vertices[2], vertices[3], colors[0]},
+        {vertices[1], vertices[5], vertices[6], colors[1]}, // Right face
+        {vertices[1], vertices[6], vertices[2], colors[1]},
+        {vertices[5], vertices[4], vertices[7], colors[2]}, // Back face
+        {vertices[5], vertices[7], vertices[6], colors[2]},
+        {vertices[4], vertices[0], vertices[3], colors[3]}, // Left face
+        {vertices[4], vertices[3], vertices[7], colors[3]},
+        {vertices[3], vertices[2], vertices[6], colors[4]}, // Top face
+        {vertices[3], vertices[6], vertices[7], colors[4]},
+        {vertices[4], vertices[5], vertices[1], colors[5]}, // Bottom face
+        {vertices[4], vertices[1], vertices[0], colors[5]}
+    };
 
     // Initial camera normal facing directly along the Z-axis
     std::vector<float> cameraNormal = {0.0f, 0.0f, 1.0f};
     canvas.setCameraNormal(cameraNormal);
 
-    int numFrames = 5;                     // Number of frames for the animation (one per rotation)
-    float rotationAngle = 360.0 / numFrames; // Angle for each rotation
+    int numFrames = 2;
+    float rotationAngle = 360.0 / numFrames;
 
-    // Generate frames for the animation
     for (int frame = 0; frame < numFrames; ++frame)
     {
-        // Clear the canvas for the new frame
         canvas.clear();
 
-        // Project and render all four faces of the tetrahedron
-        face1.project(canvas);
-        face2.project(canvas);
-        face3.project(canvas);
-        face4.project(canvas);
+        for (auto &face : faces)
+        {
+            face.project(canvas);
+            face.rotateAroundX(rotationAngle);
+        }
 
-        // Rotate the tetrahedron around the X-axis
-        face1.rotateAroundX(rotationAngle);
-        face2.rotateAroundX(rotationAngle);
-        face3.rotateAroundX(rotationAngle);
-        face4.rotateAroundX(rotationAngle);
-
-        // Save the current frame to a .ppm file
         std::string filename = "output/frame_" + std::to_string(frame) + ".ppm";
         canvas.writePPM(filename);
     }
