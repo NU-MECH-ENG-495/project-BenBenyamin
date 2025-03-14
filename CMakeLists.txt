@@ -12,11 +12,17 @@ endif()
 # Add debug-specific compiler options
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -g")
 
-# Find all .cpp files in the src directory
-file(GLOB SOURCES "*.cpp")
+include_directories(${PROJECT_SOURCE_DIR}/include)
+
+add_library (graphics
+    src/triangle.cpp 
+    src/sphere.cpp
+    src/canvas.cpp
+)
+
+target_include_directories(graphics PUBLIC ${PROJECT_SOURCE_DIR}/include)
 
 # Create the executable
-add_executable(CPP_Project ${SOURCES})
+add_executable(CPP_Project src/main.cpp)
 
-# Include the src directory for headers
-target_include_directories(CPP_Project PRIVATE src)
+target_link_libraries(CPP_Project PRIVATE graphics)
