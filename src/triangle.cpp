@@ -16,8 +16,8 @@ void TriangleSurface::project(Canvas &c)
     std::vector<float> projectedB = projectPointToPlane(B, normal);
     std::vector<float> projectedC = projectPointToPlane(C, normal);
 
-    std::cout << A[0] << " " << A[1] << " " << A[2] << std::endl;
-    std::cout << projectedA[0] << " " << projectedA[1] << " " << projectedA[2] << std::endl;
+    // std::cout << A[0] << " " << A[1] << " " << A[2] << std::endl;
+    // std::cout << projectedA[0] << " " << projectedA[1] << " " << projectedA[2] << std::endl;
 
 
     // TODO: Make these loops scope smaller
@@ -91,9 +91,9 @@ std::vector<float> TriangleSurface::projectPointToPlane
     std::vector<float> projection = point;
     
     float dotProduct = point[0] * normal[0] + point[1] * normal[1] + point[2] * normal[2];
-    projection[0] = 300*(projection[0] - dotProduct * normal[0])/dotProduct;
-    projection[1] = 300*(projection[1] - dotProduct * normal[1])/dotProduct;
-    projection[2] = 300*(projection[2] - dotProduct * normal[2])/dotProduct;
+    projection[0] -= dotProduct * normal[0];
+    projection[1] -= dotProduct * normal[1];
+    projection[2] -= dotProduct * normal[2];
 
     return projection;
 }
