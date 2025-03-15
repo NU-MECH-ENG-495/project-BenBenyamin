@@ -105,7 +105,8 @@ void Canvas::setCameraNormal(std::vector<float> &normal)
     }
 
     this->cameraNormal = normal;
-    this->clear(); // clear  the canvas becuase the the camera position was changed
+    calculateOrthonormals();  // calculate two orthonormals for quick use afterwards.
+    this->clear(); // clear  the canvas becuase the the camera position was changed.
 }
 
 std::vector<float> Canvas::getCameraNormal() const {return this->cameraNormal;}

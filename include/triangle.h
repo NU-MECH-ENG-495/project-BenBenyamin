@@ -6,11 +6,6 @@
 
 class TriangleSurface
 {
-private:
-    std::vector<float> A; // first point of the triangle
-    std::vector<float> B; // second point of the triangle
-    std::vector<float> C; // third point of the triangle
-    std::vector<float> color;
 
 public:
     TriangleSurface(const std::vector<float> &a, const std::vector<float> &b, const std::vector<float> &c, const std::vector<float> &color);
@@ -24,6 +19,13 @@ public:
     void rotateAroundX(float angle, const std::vector<float> &rotationPoint);
     void rotateAroundY(float angle, const std::vector<float> &rotationPoint);
     void rotateAroundZ(float angle, const std::vector<float> &rotationPoint);
+
+private:
+    std::vector<float> A; // first point of the triangle
+    std::vector<float> B; // second point of the triangle
+    std::vector<float> C; // third point of the triangle
+    std::vector<float> color;
+
 };
 
 #endif // TRIANGLE_H
