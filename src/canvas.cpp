@@ -5,6 +5,7 @@
 #include <cmath>
 
 #include "canvas.h"
+#include "linalg.h"
 
 Canvas::Canvas(int h, int w) : height(h), width(w), pixels(h, std::vector<std::vector<float>>(w, std::vector<float>(3, 0.0))), depth(h, std::vector<float>(w, 0.0f)) {};
 
@@ -105,8 +106,15 @@ void Canvas::setCameraNormal(std::vector<float> &normal)
     }
 
     this->cameraNormal = normal;
-    calculateOrthonormals();  // calculate two orthonormals for quick use afterwards.
+    // Call calculateOrthonormals to get the orthonormal basis
+    std::vector<std::vector<float>> orthonormals = calculateOrthonormals(normal);
+
+    // Save the result to cameraOrthonormal1 and cameraOrthonormal2
+    this->cameraOrthonormal1 = orthonormals[0]; 
+    this->cameraOrthonormal2 = orthonormals[1];
+
     this->clear(); // clear  the canvas becuase the the camera position was changed.
 }
 
 std::vector<float> Canvas::getCameraNormal() const {return this->cameraNormal;}
+std::vector<std::vector<float>> Canvas::getCameraAxis() const {return {this->cameraNormal,this->cameraOrthonormal1,this->cameraOrthonormal2};}

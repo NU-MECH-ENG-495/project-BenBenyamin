@@ -16,16 +16,15 @@ public:
     void setCameraNormal(std::vector<float> &normal);
     void clear();
     std::vector<float> getCameraNormal() const;
-
+    std::vector<std::vector<float>> getCameraAxis() const;
 
 private:
     int height;
     int width;
     std::vector<float> cameraNormal;
-    std::vector<float> cameraOrthonormal1, cameraOrthonormal1; 
+    std::vector<float> cameraOrthonormal1, cameraOrthonormal2; 
     std::vector<std::vector<std::vector<float>>> pixels;
     std::vector<std::vector<float>> depth;
-    void calculateOrthonormals();
 };
 
 #endif // CANVAS_H

@@ -4,13 +4,16 @@
 #include <iostream>
 #include "triangle.h"
 #include "canvas.h"
+#include "linalg.h"
 
 TriangleSurface::TriangleSurface(const std::vector<float> &a, const std::vector<float> &b, const std::vector<float> &c, const std::vector<float> &color)
     : A{a}, B{b}, C{c}, color{color} {}
 
 void TriangleSurface::project(Canvas &c)
-{
-    auto normal = c.getCameraNormal();
+{   
+    auto cameraAxis = c.getCameraAxis();
+    auto normal = cameraAxis[0];
+    
 
     std::vector<float> projectedA = projectPointToPlane(A, normal);
     std::vector<float> projectedB = projectPointToPlane(B, normal);
@@ -19,12 +22,11 @@ void TriangleSurface::project(Canvas &c)
     // std::cout << A[0] << " " << A[1] << " " << A[2] << std::endl;
     // std::cout << projectedA[0] << " " << projectedA[1] << " " << projectedA[2] << std::endl;
 
+    auto extremes = calculateDotProductExtremes(projectedA, projectedB, projectedC, cameraAxis);
 
-    // TODO: Make these loops scope smaller
-
-    for (int i = 0; i < c.getWidth(); ++i)
+    for (int i = extremes.first.first; i < extremes.first.second; ++i)
     {
-        for (int j = 0; j < c.getHeight(); ++j)
+        for (int j = extremes.second.first; j <  extremes.second.second; ++j)
         {
             std::vector<float> point = {static_cast<float>(i), static_cast<float>(j)};
 
