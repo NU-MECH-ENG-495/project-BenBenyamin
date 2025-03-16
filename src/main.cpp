@@ -41,24 +41,24 @@ int main()
         {vertices[0], vertices[2], vertices[3], red}, 
 
         // // Right face (blue)
-        // {vertices[1], vertices[5], vertices[6], blue}, 
-        // {vertices[1], vertices[6], vertices[2], blue}, 
+        {vertices[1], vertices[5], vertices[6], blue}, 
+        {vertices[1], vertices[6], vertices[2], blue}, 
 
         // Back face (yellow)
         {vertices[5], vertices[4], vertices[7], yellow}, 
         {vertices[5], vertices[7], vertices[6], yellow}, 
 
         // // Left face (green)
-        // {vertices[4], vertices[0], vertices[3], green}, 
-        // {vertices[4], vertices[3], vertices[7], green}, 
+        {vertices[4], vertices[0], vertices[3], green}, 
+        {vertices[4], vertices[3], vertices[7], green}, 
 
         // // Top face (white)
-        // {vertices[3], vertices[2], vertices[6], white}, 
-        // {vertices[3], vertices[6], vertices[7], white}, 
+        {vertices[3], vertices[2], vertices[6], white}, 
+        {vertices[3], vertices[6], vertices[7], white}, 
 
         // // Bottom face (gray)
-        // {vertices[0], vertices[1], vertices[5], gray}, 
-        // {vertices[0], vertices[5], vertices[4], gray}  
+        {vertices[0], vertices[1], vertices[5], gray}, 
+        {vertices[0], vertices[5], vertices[4], gray}  
     };
 
     // Initial camera normal facing directly along the Z-axis
@@ -66,7 +66,7 @@ int main()
     canvas.setCameraNormal(cameraNormal);
 
     // Rotation setup
-    int numFrames = 2;
+    int numFrames = 20;
     float rotationAngle = 360.0f / numFrames;
 
     // Cube center for rotation
@@ -79,7 +79,8 @@ int main()
         for (auto &face : faces)
         {
             face.project(canvas);
-            face.rotateAroundY(180, rotationCenter); // Rotate around Y-axis at cube center
+            face.rotateAroundX(rotationAngle, rotationCenter);
+            face.rotateAroundY(rotationAngle, rotationCenter);
         }
         std::string filename = "../output/frame_" + std::to_string(frame) + ".ppm";
         canvas.writePPM(filename);
