@@ -7,7 +7,13 @@ class TriangleObject
 {
 public:
     TriangleObject(const std::string &stlFileName);
+    
+    void project(Canvas &c);
+    
     void rotateAroundX(float angle, const std::vector<float> &rotationPoint);
+
+    void scale(float k);
+    void translate(float x , float y , float z);
 
     int size();
 

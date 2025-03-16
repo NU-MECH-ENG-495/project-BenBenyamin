@@ -15,7 +15,7 @@ int main()
     std::vector<float> cameraNormal = {0.0f, 0.0f, 1.0f};
     canvas.setCameraNormal(cameraNormal);
 
-    std::string filename = "/home/ben/Documents/Courses/Winter-2025/CPP/Project/example/ASCII.stl";
+    std::string filename = "/home/ben/Documents/Courses/Winter-2025/CPP/Project/example/cube.stl";
     // std::vector<TriangleSurface> triangles = readSTL(filename);
 
     TriangleObject model (filename);
@@ -25,7 +25,7 @@ int main()
     std::vector<float> rotationCenter = {500.0f, 500.0f, 350.0f}; 
 
     // orient
-    canvas.clear();
+    // canvas.clear();
     // for (auto &triangle : triangles) 
     // {
     //     triangle.scale(4.5);
@@ -35,6 +35,13 @@ int main()
     //     triangle.rotateAroundY(-15,rotationCenter);
 
     // }
+
+    model.scale(2);
+    model.translate(100,0,0);
+    model.project(canvas);
+
+    std::string outFileName = "../output/MODEL_OMP.ppm";
+    canvas.writePPM(outFileName);
 
     // for (int i =0 ;i < 360/6; i ++)
     // {
