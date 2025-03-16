@@ -94,10 +94,10 @@ std::vector<float> TriangleSurface::projectPointToPlane
     // Project the point onto the plane
     std::vector<float> projection = point;
     
-    float dotProduct = point[0] * normal[0] + point[1] * normal[1] + point[2] * normal[2];
-    projection[0] -= dotProduct * normal[0];
-    projection[1] -= dotProduct * normal[1];
-    projection[2] -= dotProduct * normal[2];
+    float dProd = dotProduct(point,normal);
+    projection[0] -= dProd * normal[0];
+    projection[1] -= dProd * normal[1];
+    projection[2] -= dProd * normal[2];
 
     return projection;
 }
@@ -203,4 +203,19 @@ void TriangleSurface::rotateAroundZ(float angle, const std::vector<float> &rotat
         point.get()[1] += rotationPoint[1];
         point.get()[2] += rotationPoint[2];
     }
+}
+
+void TriangleSurface::scale(float k)
+{
+    this->A[0] *= k;
+    this->A[1] *= k;
+    this->A[2] *= k;
+
+    this->B[0] *= k;
+    this->B[1] *= k;
+    this->B[2] *= k;
+
+    this->C[0] *= k;
+    this->C[1] *= k;
+    this->C[2] *= k;
 }

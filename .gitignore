@@ -1,5 +1,6 @@
 .vscode
 output
+example
 output.ppm
 main
 build
