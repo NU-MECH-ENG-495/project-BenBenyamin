@@ -20,12 +20,15 @@ public:
     void rotateAroundY(float angle, const std::vector<float> &rotationPoint);
     void rotateAroundZ(float angle, const std::vector<float> &rotationPoint);
 
+    void scale(float k);
+    void translate(float x , float y , float z);
+
+private:
+    
     std::vector<float> A; // first point of the triangle
     std::vector<float> B; // second point of the triangle
     std::vector<float> C; // third point of the triangle
     std::vector<float> color;
-private:
-    
 };
 
 #endif // TRIANGLE_H

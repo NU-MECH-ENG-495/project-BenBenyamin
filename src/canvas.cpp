@@ -19,10 +19,6 @@ void Canvas::putPixel(int x, int y, float depth, std::vector<float> &color)
             this->depth[x][y] = depth;  
         }
     }
-    else
-    {
-        throw std::invalid_argument("Invalid coordinates or color");
-    }
 }
 
 void Canvas::clear()
