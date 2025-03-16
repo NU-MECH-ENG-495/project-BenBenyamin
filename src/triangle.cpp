@@ -10,23 +10,25 @@ TriangleSurface::TriangleSurface(const std::vector<float> &a, const std::vector<
     : A{a}, B{b}, C{c}, color{color} {}
 
 void TriangleSurface::project(Canvas &c)
-{   
+{
     auto cameraAxis = c.getCameraAxis();
     auto normal = cameraAxis[0];
-    
 
     std::vector<float> projectedA = projectPointToPlane(A, normal);
     std::vector<float> projectedB = projectPointToPlane(B, normal);
     std::vector<float> projectedC = projectPointToPlane(C, normal);
 
-    // std::cout << A[0] << " " << A[1] << " " << A[2] << std::endl;
-    // std::cout << projectedA[0] << " " << projectedA[1] << " " << projectedA[2] << std::endl;
-
     auto extremes = calculateDotProductExtremes(projectedA, projectedB, projectedC, cameraAxis);
 
-    for (int i = extremes.first.first; i < extremes.first.second; ++i)
+    // Extract loop bounds into simple integer variables
+    int minI = static_cast<int>(extremes.first.first);
+    int maxI = static_cast<int>(extremes.first.second);
+    int minJ = static_cast<int>(extremes.second.first);
+    int maxJ = static_cast<int>(extremes.second.second);
+
+    for (int i = minI; i < maxI; ++i)
     {
-        for (int j = extremes.second.first; j <  extremes.second.second; ++j)
+        for (int j = minJ; j < maxJ; ++j)
         {
             std::vector<float> point = {static_cast<float>(i), static_cast<float>(j)};
 
@@ -35,9 +37,12 @@ void TriangleSurface::project(Canvas &c)
             if (!point3D.empty()) // If the point is inside the triangle then render it
             {
                 // Calculate the depth of the point
-                auto depth = static_cast<int>(dotProduct(point3D,normal));
+                auto depth = static_cast<int>(dotProduct(point3D, normal));
 
-                c.putPixel(i, j, depth, color);
+                // Protect the putPixel call with a critical section
+                {
+                    c.putPixel(i, j, depth, color);
+                }
             }
         }
     }
@@ -70,12 +75,11 @@ std::vector<float> TriangleSurface::isInside(
     if (u >= 0 && v >= 0 && u + v <= 1)
     {
         // Calculate the 3D coordinates of the point inside the triangle
-        std::vector<float> point3D = 
-        {
-            A[0] + u * (B[0] - A[0]) + v * (C[0] - A[0]),
-            A[1] + u * (B[1] - A[1]) + v * (C[1] - A[1]),
-            A[2] + u * (B[2] - A[2]) + v * (C[2] - A[2])
-        };
+        std::vector<float> point3D =
+            {
+                A[0] + u * (B[0] - A[0]) + v * (C[0] - A[0]),
+                A[1] + u * (B[1] - A[1]) + v * (C[1] - A[1]),
+                A[2] + u * (B[2] - A[2]) + v * (C[2] - A[2])};
 
         // std::cout << "Point 3D:" << point3D[0] << " " << point3D[1] << " " << point3D[2] << std::endl;
 
@@ -85,16 +89,14 @@ std::vector<float> TriangleSurface::isInside(
     return {}; // Point is not inside the triangle
 }
 
-std::vector<float> TriangleSurface::projectPointToPlane
-    (
+std::vector<float> TriangleSurface::projectPointToPlane(
     const std::vector<float> &point,
-    const std::vector<float> &normal
-    ) const
+    const std::vector<float> &normal) const
 {
     // Project the point onto the plane
     std::vector<float> projection = point;
-    
-    float dProd = dotProduct(point,normal);
+
+    float dProd = dotProduct(point, normal);
     projection[0] -= dProd * normal[0];
     projection[1] -= dProd * normal[1];
     projection[2] -= dProd * normal[2];
@@ -168,7 +170,6 @@ void TriangleSurface::rotateAroundY(float angle, const std::vector<float> &rotat
         point.get()[1] = static_cast<int>(point.get()[1]);
         point.get()[2] = static_cast<int>(point.get()[2]);
         point.get()[3] = static_cast<int>(point.get()[3]);
-
     }
 }
 
@@ -220,8 +221,7 @@ void TriangleSurface::scale(float k)
     this->C[2] *= k;
 }
 
-
-void TriangleSurface::translate(float x , float y , float z)
+void TriangleSurface::translate(float x, float y, float z)
 {
     this->A[0] += x;
     this->A[1] += y;
