@@ -38,6 +38,10 @@ int main()
 
     model.scale(2);
     model.translate(100,0,0);
+    
+    model.rotateAroundX(10,rotationCenter);
+    model.rotateAroundY(10,rotationCenter);
+    model.rotateAroundZ(10,rotationCenter);
     model.project(canvas);
 
     std::string outFileName = "../output/MODEL_OMP.ppm";

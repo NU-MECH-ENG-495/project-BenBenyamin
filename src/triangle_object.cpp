@@ -16,6 +16,26 @@ void TriangleObject::rotateAroundX(float angle, const std::vector<float> &rotati
     }
 }
 
+void TriangleObject::rotateAroundY(float angle, const std::vector<float> &rotationPoint)
+{
+    for (int i =0; i < this->triangles.size(); i++)
+    {
+        auto& triangle = triangles[i]; 
+        triangle.rotateAroundY(angle,rotationPoint);
+    }
+}
+
+
+void TriangleObject::rotateAroundZ(float angle, const std::vector<float> &rotationPoint)
+{
+    for (int i =0; i < this->triangles.size(); i++)
+    {
+        auto& triangle = triangles[i]; 
+        triangle.rotateAroundZ(angle,rotationPoint);
+    }
+}
+
+
 void TriangleObject::project(Canvas &c)
 {
     for (int i =0; i < this->triangles.size(); i++)
