@@ -4,6 +4,7 @@
 #include <vector>
 #include <cstdlib>
 #include <ctime>
+#include <memory>
 #include "triangle.h"
 #include "canvas.h"
 
@@ -14,10 +15,10 @@ std::vector<float> getRandomColor() {
             static_cast<float>(rand()) / RAND_MAX};
 }
 
-std::vector<TriangleSurface> readSTL(const std::string &filename)
+std::shared_ptr<std::vector<TriangleSurface>> readSTL(const std::string &filename)
 {
     srand(0); // set the seed
-    std::vector<TriangleSurface> triangles;
+    auto triangles = std::make_shared<std::vector<TriangleSurface>>();
     std::ifstream file(filename);
 
     if (!file.is_open())
@@ -56,7 +57,7 @@ std::vector<TriangleSurface> readSTL(const std::string &filename)
             {
                 color = getRandomColor(); // Generate random color
             }
-            triangles.emplace_back(A, B, C, color);
+            triangles->emplace_back(A, B, C, color);
 
             faceCounter++;
         }

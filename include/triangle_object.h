@@ -1,7 +1,10 @@
+#ifndef TRIOBJ_H
+#define TRIOBJ_H
+
 #include <vector>
 #include <string>
+#include <memory>
 #include "triangle.h"
-
 
 class TriangleObject
 {
@@ -20,5 +23,9 @@ public:
     int size();
 
 private:
-    std::vector<TriangleSurface> triangles;
+
+    std::shared_ptr<std::vector<TriangleSurface>> triangles;
+    size_t length;
 };
+
+#endif

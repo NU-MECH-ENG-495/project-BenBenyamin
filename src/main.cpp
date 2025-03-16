@@ -15,7 +15,7 @@ int main()
     std::vector<float> cameraNormal = {0.0f, 0.0f, 1.0f};
     canvas.setCameraNormal(cameraNormal);
 
-    std::string filename = "/home/ben/Documents/Courses/Winter-2025/CPP/Project/example/cube.stl";
+    std::string filename = "/home/ben/Documents/Courses/Winter-2025/CPP/Project/example/eiffel.stl";
     // std::vector<TriangleSurface> triangles = readSTL(filename);
 
     TriangleObject model (filename);
@@ -36,29 +36,28 @@ int main()
 
     // }
 
-    model.scale(2);
-    model.translate(100,0,0);
+
+    model.scale(7);
+    model.translate(500,500,0);
+    // model.rotateAroundX(90,rotationCenter);
+    // model.rotateAroundZ(-90,rotationCenter);
+
+    // model.scale(4.5);
+    // model.rotateAroundY(-90,rotationCenter);
+    // model.translate(-200,0,0);
+    // model.rotateAroundY(-15,rotationCenter);
+
     
-    model.rotateAroundX(10,rotationCenter);
-    model.rotateAroundY(10,rotationCenter);
-    model.rotateAroundZ(10,rotationCenter);
-    model.project(canvas);
 
-    std::string outFileName = "../output/MODEL_OMP.ppm";
-    canvas.writePPM(outFileName);
 
-    // for (int i =0 ;i < 360/6; i ++)
-    // {
-
-    //     for (auto &triangle : triangles)
-    //     {
-    //         triangle.project(canvas);
-    //         triangle.rotateAroundX(6,rotationCenter);
-    //     }
-    //     std::string outFileName = "../output/MODEL_" + std::to_string(i) + ".ppm";
-    //     canvas.writePPM(outFileName);
-    //     canvas.clear();
+    for (int i =0 ;i < 1; i ++)
+    {
+        model.project(canvas);
+        model.rotateAroundX(10,rotationCenter);
+        std::string outFileName = "../output/MODEL_OMP_" + std::to_string(i) + ".ppm";
+        canvas.writePPM(outFileName);
+        canvas.clear();
     
-    // }
+    }
     return 0;
 }
