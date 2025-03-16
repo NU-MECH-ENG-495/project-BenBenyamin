@@ -52,7 +52,7 @@ std::vector<TriangleSurface> readSTL(const std::string &filename)
             issC >> keyword >> C[0] >> C[1] >> C[2];
 
             // If faceCounter is even, assign a random color to the next two faces
-            if (faceCounter % 2 == 0)
+            if (faceCounter % 5000 == 0)
             {
                 color = getRandomColor(); // Generate random color
             }

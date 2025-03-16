@@ -17,20 +17,32 @@ int main()
     std::vector<TriangleSurface> triangles = readSTL(filename);
     std::cout << "Loaded " << triangles.size() << " triangles from " << filename << std::endl;
 
-    std::vector<float> rotationCenter = {250.0f, 250.0f, 350.0f}; 
+    std::vector<float> rotationCenter = {500.0f, 500.0f, 350.0f}; 
 
-    for (int i =0 ;i < 1; i ++)
+    // orient
+    canvas.clear();
+    for (auto &triangle : triangles) 
     {
-        canvas.clear();
-        for (auto &triangle : triangles) 
-        {
-            triangle.rotateAroundX(15,rotationCenter);
-            triangle.rotateAroundY(15,rotationCenter);
-            triangle.project(canvas);
-        }
+        triangle.scale(7);
+        triangle.translate(500,500,0);
+        triangle.rotateAroundX(90,rotationCenter);
+        triangle.rotateAroundZ(-90,rotationCenter);
+        // triangle.rotateAroundX(-15,rotationCenter);
 
+    }
+
+    for (int i =0 ;i < 360/15; i ++)
+    {
+
+        for (auto &triangle : triangles)
+        {
+            triangle.project(canvas);
+            triangle.rotateAroundX(15,rotationCenter);
+        }
         std::string outFileName = "../output/cube_" + std::to_string(i) + ".ppm";
         canvas.writePPM(outFileName);
+        canvas.clear();
+    
     }
     return 0;
 }

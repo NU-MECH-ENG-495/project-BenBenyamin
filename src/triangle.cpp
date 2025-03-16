@@ -219,3 +219,19 @@ void TriangleSurface::scale(float k)
     this->C[1] *= k;
     this->C[2] *= k;
 }
+
+
+void TriangleSurface::translate(float x , float y , float z)
+{
+    this->A[0] += x;
+    this->A[1] += y;
+    this->A[2] += z;
+
+    this->B[0] += x;
+    this->B[1] += y;
+    this->B[2] += z;
+
+    this->C[0] += x;
+    this->C[1] += y;
+    this->C[2] += z;
+}
