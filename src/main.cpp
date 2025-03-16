@@ -38,7 +38,7 @@ int main()
     std::vector<TriangleSurface> faces = {
         // Front face (red)
         {vertices[0], vertices[1], vertices[2], red}, 
-        // {vertices[0], vertices[2], vertices[3], red}, 
+        {vertices[0], vertices[2], vertices[3], red}, 
 
         // // Right face (blue)
         // {vertices[1], vertices[5], vertices[6], blue}, 
@@ -46,7 +46,7 @@ int main()
 
         // Back face (yellow)
         {vertices[5], vertices[4], vertices[7], yellow}, 
-        // {vertices[5], vertices[7], vertices[6], yellow}, 
+        {vertices[5], vertices[7], vertices[6], yellow}, 
 
         // // Left face (green)
         // {vertices[4], vertices[0], vertices[3], green}, 
@@ -75,13 +75,12 @@ int main()
     for (int frame = 0; frame < numFrames; ++frame)
     {
         canvas.clear();
-
+    
         for (auto &face : faces)
         {
             face.project(canvas);
-            face.rotateAroundY(rotationAngle, rotationCenter); // Rotate around Y-axis at cube center
+            face.rotateAroundY(180, rotationCenter); // Rotate around Y-axis at cube center
         }
-
         std::string filename = "../output/frame_" + std::to_string(frame) + ".ppm";
         canvas.writePPM(filename);
     }

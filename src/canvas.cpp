@@ -13,7 +13,7 @@ void Canvas::putPixel(int x, int y, float depth, std::vector<float> &color)
 {
     if (x >= 0 && x < height && y >= 0 && y < width && color.size() == 3)
     {
-        if (this->depth[x][y] > depth || this->depth[x][y] == 0.0f)
+        if ((depth != 0 && this->depth[x][y] > depth )|| this->depth[x][y] == 0.0f)
         {
             this->pixels[x][y] = color;
             this->depth[x][y] = depth;  
@@ -32,6 +32,7 @@ void Canvas::clear()
     for (int i = 0; i < height; ++i)
     {
         std::fill(pixels[i].begin(), pixels[i].end(), defaultColor);
+        std::fill(depth[i].begin(), depth[i].end(), 0);
     }
 }
 
