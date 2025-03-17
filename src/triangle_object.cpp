@@ -1,7 +1,10 @@
+#include <omp.h>
+
 #include "triangle_object.h"
 #include "triangle.h"
 #include "canvas.h"
 #include "stl.h"
+
 TriangleObject::TriangleObject(const std::string &stlFileName)
 {
     triangles = std::make_shared<std::vector<TriangleSurface>>();
