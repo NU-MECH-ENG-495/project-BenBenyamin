@@ -5,6 +5,7 @@
 #include "canvas.h"
 #include "triangle.h"
 #include "stl.cpp"
+#include "triangle_object.h"
 
 int main()
 {
@@ -14,30 +15,22 @@ int main()
     canvas.setCameraNormal(cameraNormal);
 
     std::string filename = "/home/ben/Documents/Courses/Winter-2025/CPP/Project/example/ASCII.stl";
-    auto triangles = std::make_shared<std::vector<TriangleSurface>>();
-    readSTL(filename, triangles);
-    std::cout << "Loaded " << triangles->size() << " triangles from " << filename << std::endl;
+    TriangleObject triangleObject(filename); // Create TriangleObject and load the STL file
+    std::cout << "Loaded " << triangleObject.size() << " triangles from " << filename << std::endl;
 
     std::vector<float> rotationCenter = {500.0f, 500.0f, 350.0f};
 
     // orient
     canvas.clear();
-    for (auto &triangle : *triangles) // Dereference to access the vector
-    {
-        triangle.scale(4.5);
-        triangle.rotateAroundY(-90, rotationCenter);
-        triangle.translate(-200, 0, 0);
-        // triangle.rotateAroundZ(-90, rotationCenter); // Uncomment if needed
-        triangle.rotateAroundY(-15, rotationCenter);
-    }
+    triangleObject.scale(4.5);
+    triangleObject.rotateAroundY(-90, rotationCenter);
+    triangleObject.translate(-200, 0, 0);
+    triangleObject.rotateAroundY(-15, rotationCenter);
 
-    for (int i = 0; i < 1; i++)
+    for (int i = 0; i < 3; i++)
     {
-        for (auto &triangle : *triangles) // Dereference to access the vector
-        {
-            triangle.project(canvas);
-            triangle.rotateAroundX(6, rotationCenter);
-        }
+        triangleObject.project(canvas);
+        triangleObject.rotateAroundX(6, rotationCenter);
 
         std::string outFileName = "../output/MODEL_" + std::to_string(i) + ".ppm";
         canvas.writePPM(outFileName);
