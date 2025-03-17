@@ -4,7 +4,10 @@
 #include <vector>
 #include <string>
 #include <memory>
-#include "triangle.h"
+//#include "triangle.h"
+
+class TriangleSurface;
+class Canvas;
 
 class TriangleObject
 {

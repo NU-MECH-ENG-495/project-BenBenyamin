@@ -17,7 +17,12 @@ add_test(NAME 3D_TEST COMMAND 3D_TEST)
 
 target_link_libraries(3D_TEST PUBLIC gtest gtest_main graphics)
 
-target_compile_definitions(3D_TEST PRIVATE UNIT_TEST)
+target_compile_definitions(3D_TEST PUBLIC UNIT_TEST)
+target_compile_definitions(CPP_Project PUBLIC UNIT_TEST)
+
+
+
+
 
 include(GoogleTest)
 gtest_discover_tests(3D_TEST)

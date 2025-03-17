@@ -8,7 +8,7 @@
 #include "triangle_object.h"
 
 
-#ifndef UNIT_TEST
+// #ifndef UNIT_TEST
 int main()
 {
     int width = 1000, height = 1000;
@@ -41,4 +41,4 @@ int main()
 
     return 0;
 }
-#endif
+// #endif
