@@ -26,3 +26,8 @@ target_include_directories(graphics PUBLIC ${PROJECT_SOURCE_DIR}/include)
 add_executable(CPP_Project src/main.cpp)
 
 target_link_libraries(CPP_Project PRIVATE graphics)
+
+# Enable testing
+enable_testing()
+# Add the tests subdirectory
+add_subdirectory(test)
