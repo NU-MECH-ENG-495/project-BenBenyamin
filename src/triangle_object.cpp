@@ -6,8 +6,8 @@
  * It provides methods for projecting all triangles onto a canvas, applying transformations (rotation, scaling, translation)
  * to all triangles, and querying the number of triangles in the object.
  * 
- * @author Your Name
- * @date October 2023
+ * @author Ben Benyamin
+ * @date March 2025
  */
 
  #include <omp.h> // OpenMP for parallel processing
