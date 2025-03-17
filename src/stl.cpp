@@ -14,16 +14,21 @@ std::vector<float> getRandomColor() {
             static_cast<float>(rand()) / RAND_MAX};
 }
 
-std::vector<TriangleSurface> readSTL(const std::string &filename)
+#include <iostream>
+#include <fstream>
+#include <sstream>
+#include <vector>
+#include <memory> // for std::shared_ptr
+
+void readSTL(const std::string &filename, std::shared_ptr<std::vector<TriangleSurface>> triangles)
 {
     srand(0); // set the seed
-    std::vector<TriangleSurface> triangles;
     std::ifstream file(filename);
 
     if (!file.is_open())
     {
         std::cerr << "Error: Unable to open STL file " << filename << std::endl;
-        return triangles;
+        return;
     }
 
     std::string line;
@@ -56,13 +61,12 @@ std::vector<TriangleSurface> readSTL(const std::string &filename)
             {
                 color = getRandomColor(); // Generate random color
             }
-            triangles.emplace_back(A, B, C, color);
+            triangles->emplace_back(A, B, C, color); // Add the triangle to the vector
 
             faceCounter++;
         }
     }
 
     file.close();
-    return triangles;
 }
 

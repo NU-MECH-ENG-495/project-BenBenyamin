@@ -14,35 +14,35 @@ int main()
     canvas.setCameraNormal(cameraNormal);
 
     std::string filename = "/home/ben/Documents/Courses/Winter-2025/CPP/Project/example/ASCII.stl";
-    std::vector<TriangleSurface> triangles = readSTL(filename);
-    std::cout << "Loaded " << triangles.size() << " triangles from " << filename << std::endl;
+    auto triangles = std::make_shared<std::vector<TriangleSurface>>();
+    readSTL(filename, triangles);
+    std::cout << "Loaded " << triangles->size() << " triangles from " << filename << std::endl;
 
-    std::vector<float> rotationCenter = {500.0f, 500.0f, 350.0f}; 
+    std::vector<float> rotationCenter = {500.0f, 500.0f, 350.0f};
 
     // orient
     canvas.clear();
-    for (auto &triangle : triangles) 
+    for (auto &triangle : *triangles) // Dereference to access the vector
     {
         triangle.scale(4.5);
-        triangle.rotateAroundY(-90,rotationCenter);
-        triangle.translate(-200,0,0);
-        // triangle.rotateAroundZ(-90,rotationCenter);
-        triangle.rotateAroundY(-15,rotationCenter);
-
+        triangle.rotateAroundY(-90, rotationCenter);
+        triangle.translate(-200, 0, 0);
+        // triangle.rotateAroundZ(-90, rotationCenter); // Uncomment if needed
+        triangle.rotateAroundY(-15, rotationCenter);
     }
 
-    for (int i =0 ;i < 360/6; i ++)
+    for (int i = 0; i < 1; i++)
     {
-
-        for (auto &triangle : triangles)
+        for (auto &triangle : *triangles) // Dereference to access the vector
         {
             triangle.project(canvas);
-            triangle.rotateAroundX(6,rotationCenter);
+            triangle.rotateAroundX(6, rotationCenter);
         }
+
         std::string outFileName = "../output/MODEL_" + std::to_string(i) + ".ppm";
         canvas.writePPM(outFileName);
         canvas.clear();
-    
     }
+
     return 0;
 }
