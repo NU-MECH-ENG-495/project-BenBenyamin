@@ -4,10 +4,9 @@
 #include <vector>
 #include <string>
 #include <memory>
-//#include "triangle.h"
+#include "triangle.h"
 
-class TriangleSurface;
-class Canvas;
+
 
 class TriangleObject
 {
@@ -29,6 +28,11 @@ private:
 
     std::shared_ptr<std::vector<TriangleSurface>> triangles;
     size_t length;
+
+#ifdef UNIT_TEST
+public:
+    std::shared_ptr<std::vector<TriangleSurface>> const getTriangles() {return triangles;};
+#endif
 };
 
 #endif
