@@ -1,0 +1,9 @@
+solid cube
+  facet normal 0.0 0.0 -1.0
+    outer loop
+      vertex 200.0 200.0 300.0
+      vertex 300.0 200.0 300.0
+      vertex 300.0 300.0 300.0
+    endloop
+  endfacet
+endsolid cube
