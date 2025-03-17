@@ -6,6 +6,8 @@
 #include <memory>
 #include "triangle.h"
 
+
+
 class TriangleObject
 {
 public:
@@ -26,6 +28,11 @@ private:
 
     std::shared_ptr<std::vector<TriangleSurface>> triangles;
     size_t length;
+
+#ifdef UNIT_TEST
+public:
+    std::shared_ptr<std::vector<TriangleSurface>> const getTriangles() {return triangles;};
+#endif
 };
 
 #endif

@@ -14,11 +14,14 @@ set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -g")
 
 include_directories(${PROJECT_SOURCE_DIR}/include)
 
-# Automatically collect all .cpp files in the src directory for the 'graphics' library
-file(GLOB GRAPHICS_SOURCES "src/*.cpp")
-
 # Add the graphics library with automatically collected source files
-add_library(graphics ${GRAPHICS_SOURCES})
+add_library(graphics 
+src/canvas.cpp
+src/linalg.cpp
+src/stl.cpp
+src/triangle.cpp
+src/triangle_object.cpp
+)
 
 target_include_directories(graphics PUBLIC ${PROJECT_SOURCE_DIR}/include)
 
@@ -26,3 +29,8 @@ target_include_directories(graphics PUBLIC ${PROJECT_SOURCE_DIR}/include)
 add_executable(CPP_Project src/main.cpp)
 
 target_link_libraries(CPP_Project PRIVATE graphics)
+
+# Enable testing
+enable_testing()
+# Add the tests subdirectory
+add_subdirectory(test)

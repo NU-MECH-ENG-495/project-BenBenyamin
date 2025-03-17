@@ -33,8 +33,8 @@ void Canvas::clear()
 }
 
 
-int Canvas::getWidth() { return width; }
-int Canvas::getHeight() { return height; }
+int Canvas::getWidth() const { return width; }
+int Canvas::getHeight() const { return height; }
 
 void Canvas::writePPM(const std::string &filename)
 {
