@@ -2,7 +2,7 @@
 #define TRIANGLE_H
 
 #include <vector>
-#include "canvas.h"
+#include "Canvas.h"
 
 class TriangleSurface
 {

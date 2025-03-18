@@ -13,10 +13,10 @@
  #include <vector>
  #include <cmath>
  #include <filesystem>
- #include "canvas.h"
- #include "triangle.h"
+ #include "Canvas.h"
+ #include "TriangleSurface.h"
  #include "stl.cpp"
- #include "triangle_object.h"
+ #include "TriangleObject.h"
  
  /**
   * @brief The main function for rendering a 3D model.

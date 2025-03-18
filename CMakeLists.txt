@@ -16,11 +16,11 @@ include_directories(${PROJECT_SOURCE_DIR}/include)
 
 # Add the graphics library with automatically collected source files
 add_library(graphics 
-src/canvas.cpp
+src/Canvas.cpp
 src/linalg.cpp
 src/stl.cpp
-src/triangle.cpp
-src/triangle_object.cpp
+src/TriangleSurface.cpp
+src/TriangleObject.cpp
 )
 
 target_include_directories(graphics PUBLIC ${PROJECT_SOURCE_DIR}/include)

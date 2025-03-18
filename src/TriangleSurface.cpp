@@ -14,8 +14,8 @@
  #include <numeric>
  #include <cmath>
  #include <iostream>
- #include "triangle.h"
- #include "canvas.h"
+ #include "TriangleSurface.h"
+ #include "Canvas.h"
  #include "linalg.h"
  
  /**

@@ -3,8 +3,8 @@
 
 #include <memory>
 #include <vector>
-#include "triangle.h"
-#include "canvas.h"
+#include "TriangleSurface.h"
+#include "Canvas.h"
 
 // Function to generate a random color
 std::vector<float> getRandomColor();

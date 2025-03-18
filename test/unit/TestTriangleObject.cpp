@@ -12,7 +12,7 @@
 
  #include <gtest/gtest.h> // Google Test framework
  #include <vector>
- #include "triangle_object.h"
+ #include "TriangleObject.h"
  
  /**
   * @brief Test fixture for the TriangleObject class.

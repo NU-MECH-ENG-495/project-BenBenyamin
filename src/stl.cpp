@@ -17,8 +17,8 @@
  #include <cstdlib>
  #include <ctime>
  #include <memory> // for std::shared_ptr
- #include "triangle.h"
- #include "canvas.h"
+ #include "TriangleSurface.h"
+ #include "Canvas.h"
  
  /**
   * @brief Generates a random color as a vector of three floats (RGB).

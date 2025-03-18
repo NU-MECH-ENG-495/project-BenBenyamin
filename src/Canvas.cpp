@@ -4,7 +4,7 @@
 #include <stdexcept>
 #include <cmath>
 
-#include "canvas.h"
+#include "Canvas.h"
 #include "linalg.h"
 /**
  * @file canvas.cpp

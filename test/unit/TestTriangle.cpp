@@ -11,7 +11,7 @@
 
  #include <gtest/gtest.h> // Google Test framework
  #include <vector>
- #include "triangle.h"
+ #include "TriangleSurface.h"
  
  /**
   * @brief Test fixture for the TriangleSurface class.

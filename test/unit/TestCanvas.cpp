@@ -10,7 +10,7 @@
  */
 
  #include <gtest/gtest.h> // Google Test framework
- #include "canvas.h"
+ #include "Canvas.h"
  #include <vector>
  
  /**

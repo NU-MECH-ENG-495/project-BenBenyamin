@@ -11,9 +11,9 @@
  */
 
  #include <omp.h> // OpenMP for parallel processing
- #include "triangle_object.h"
- #include "triangle.h"
- #include "canvas.h"
+ #include "TriangleObject.h"
+ #include "TriangleSurface.h"
+ #include "Canvas.h"
  #include "stl.h"
  
  /**
